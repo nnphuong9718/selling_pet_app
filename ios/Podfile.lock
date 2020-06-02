@@ -1,0 +1,223 @@
+PODS:
+  - boost-for-react-native (1.63.0)
+  - DoubleConversion (1.1.6)
+  - Folly (2018.10.22.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - Folly/Default (= 2018.10.22.00)
+    - glog
+  - Folly/Default (2018.10.22.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - glog
+  - glog (0.3.5)
+  - React (0.60.2):
+    - React-Core (= 0.60.2)
+    - React-DevSupport (= 0.60.2)
+    - React-RCTActionSheet (= 0.60.2)
+    - React-RCTAnimation (= 0.60.2)
+    - React-RCTBlob (= 0.60.2)
+    - React-RCTImage (= 0.60.2)
+    - React-RCTLinking (= 0.60.2)
+    - React-RCTNetwork (= 0.60.2)
+    - React-RCTSettings (= 0.60.2)
+    - React-RCTText (= 0.60.2)
+    - React-RCTVibration (= 0.60.2)
+    - React-RCTWebSocket (= 0.60.2)
+  - React-Core (0.60.2):
+    - Folly (= 2018.10.22.00)
+    - React-cxxreact (= 0.60.2)
+    - React-jsiexecutor (= 0.60.2)
+    - yoga (= 0.60.2.React)
+  - React-cxxreact (0.60.2):
+    - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-jsinspector (= 0.60.2)
+  - React-DevSupport (0.60.2):
+    - React-Core (= 0.60.2)
+    - React-RCTWebSocket (= 0.60.2)
+  - React-fishhook (0.60.2)
+  - React-jsi (0.60.2):
+    - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-jsi/Default (= 0.60.2)
+  - React-jsi/Default (0.60.2):
+    - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+  - React-jsiexecutor (0.60.2):
+    - DoubleConversion
+    - Folly (= 2018.10.22.00)
+    - glog
+    - React-cxxreact (= 0.60.2)
+    - React-jsi (= 0.60.2)
+  - React-jsinspector (0.60.2)
+  - react-native-safe-area-context (0.7.3):
+    - React
+  - React-RCTActionSheet (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTAnimation (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTBlob (0.60.2):
+    - React-Core (= 0.60.2)
+    - React-RCTNetwork (= 0.60.2)
+    - React-RCTWebSocket (= 0.60.2)
+  - React-RCTImage (0.60.2):
+    - React-Core (= 0.60.2)
+    - React-RCTNetwork (= 0.60.2)
+  - React-RCTLinking (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTNetwork (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTSettings (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTText (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTVibration (0.60.2):
+    - React-Core (= 0.60.2)
+  - React-RCTWebSocket (0.60.2):
+    - React-Core (= 0.60.2)
+    - React-fishhook (= 0.60.2)
+  - RNCMaskedView (0.1.7):
+    - React
+  - RNGestureHandler (1.6.1):
+    - React
+  - RNReanimated (1.7.1):
+    - React
+  - RNScreens (2.4.0):
+    - React
+  - RNVectorIcons (6.6.0):
+    - React
+  - yoga (0.60.2.React)
+
+DEPENDENCIES:
+  - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - React (from `../node_modules/react-native/`)
+  - React-Core (from `../node_modules/react-native/React`)
+  - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
+  - React-DevSupport (from `../node_modules/react-native/React`)
+  - React-fishhook (from `../node_modules/react-native/Libraries/fishhook`)
+  - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
+  - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
+  - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
+  - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
+  - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
+  - React-RCTImage (from `../node_modules/react-native/Libraries/Image`)
+  - React-RCTLinking (from `../node_modules/react-native/Libraries/LinkingIOS`)
+  - React-RCTNetwork (from `../node_modules/react-native/Libraries/Network`)
+  - React-RCTSettings (from `../node_modules/react-native/Libraries/Settings`)
+  - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
+  - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
+  - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
+  - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
+  - RNScreens (from `../node_modules/react-native-screens`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - boost-for-react-native
+
+EXTERNAL SOURCES:
+  DoubleConversion:
+    :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  Folly:
+    :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
+  glog:
+    :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  React:
+    :path: "../node_modules/react-native/"
+  React-Core:
+    :path: "../node_modules/react-native/React"
+  React-cxxreact:
+    :path: "../node_modules/react-native/ReactCommon/cxxreact"
+  React-DevSupport:
+    :path: "../node_modules/react-native/React"
+  React-fishhook:
+    :path: "../node_modules/react-native/Libraries/fishhook"
+  React-jsi:
+    :path: "../node_modules/react-native/ReactCommon/jsi"
+  React-jsiexecutor:
+    :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
+  React-jsinspector:
+    :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
+  React-RCTActionSheet:
+    :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
+  React-RCTAnimation:
+    :path: "../node_modules/react-native/Libraries/NativeAnimation"
+  React-RCTBlob:
+    :path: "../node_modules/react-native/Libraries/Blob"
+  React-RCTImage:
+    :path: "../node_modules/react-native/Libraries/Image"
+  React-RCTLinking:
+    :path: "../node_modules/react-native/Libraries/LinkingIOS"
+  React-RCTNetwork:
+    :path: "../node_modules/react-native/Libraries/Network"
+  React-RCTSettings:
+    :path: "../node_modules/react-native/Libraries/Settings"
+  React-RCTText:
+    :path: "../node_modules/react-native/Libraries/Text"
+  React-RCTVibration:
+    :path: "../node_modules/react-native/Libraries/Vibration"
+  React-RCTWebSocket:
+    :path: "../node_modules/react-native/Libraries/WebSocket"
+  RNCMaskedView:
+    :path: "../node_modules/@react-native-community/masked-view"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga"
+
+SPEC CHECKSUMS:
+  boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
+  Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
+  glog: cfc6d50739380e98355568d26f625db124aa6982
+  React: 02eebae5d3f91d550622fe536dad96449c818fc3
+  React-Core: 55a500c357e0478ca016b24ff025404698c2034e
+  React-cxxreact: 925810f63f67b321f3bebe11a05cedcdd8ebd3eb
+  React-DevSupport: 8dd11d2581eefd598da719ca303268831d56bede
+  React-fishhook: 86ba436bf5625917d90f1c61b0f37a373470288a
+  React-jsi: b30788a44a4ea4762a0e26af5b23cffeddccb1bf
+  React-jsiexecutor: 93376c52829d8a94ea3e9b40403e3eeba0763a8d
+  React-jsinspector: 56377ab3129247adea2225900cc168ef87dde7b3
+  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
+  React-RCTActionSheet: 3a447fecd114d0bae2f4ac71fc8ac946e56dc513
+  React-RCTAnimation: 76c47702526c06d952e88629f4d1dd3af3430d0f
+  React-RCTBlob: 3e1116c402956eebf77fb45a4b8d6391bcabd3a1
+  React-RCTImage: 8d650d1db00b436fe7e97d654b1620c66e33bfc6
+  React-RCTLinking: 313dbdad498732697798fb29684f42cca6fddb13
+  React-RCTNetwork: 159fef1ddc5d813830538ce2dff31e38f0d61773
+  React-RCTSettings: 5fcc02cc3e563e2cfa6cd8d25122a30bfd722ee1
+  React-RCTText: 70eaa870845216031d00dc990ade941809fd0e42
+  React-RCTVibration: 88946c10eba53d31cacfc4b84098a78e08c48e93
+  React-RCTWebSocket: b0ee07b4404c4205bd006c3fbb46b1c943998fe9
+  RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
+  RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
+  RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
+  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  yoga: 366e02d9e58a566b65ccf98ca74bb71352d292d2
+
+PODFILE CHECKSUM: 6a4e6c47a09386a74556aacb716054b57ac792a2
+
+COCOAPODS: 1.7.3

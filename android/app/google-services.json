@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "36431363713",
+    "firebase_url": "https://all4pet-app.firebaseio.com",
+    "project_id": "all4pet-app",
+    "storage_bucket": "all4pet-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36431363713:android:bb95f309dcf2c3d570d780",
+        "android_client_info": {
+          "package_name": "com.e_commerce_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36431363713-74li3qgt7diqvgoa71ohkeijkembj9br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHsJ2321y3EWVkmLSzVnlnQEraUpmHsfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36431363713-74li3qgt7diqvgoa71ohkeijkembj9br.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
