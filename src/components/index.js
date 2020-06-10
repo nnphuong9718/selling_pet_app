@@ -5,5 +5,6 @@ import SearchBar from './SearchBar'
 import Swipe from './Swipe'
 import HeaderBar from './HeaderBar'
 import ListItem from './ListItem'
+import HeaderBarDetail from './HeaderBarDetail'
 
-export { ButtonCus, Container, PaddingView, SearchBar, Swipe, HeaderBar, ListItem }
+export { ButtonCus, Container, PaddingView, SearchBar, Swipe, HeaderBar, ListItem, HeaderBarDetail }

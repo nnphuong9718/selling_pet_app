@@ -8,8 +8,6 @@ const reducers = {
 
 const reducer = combineReducers(reducers);
 
-console.log('####', reducer)
-
 export default (state, action) => {
     return reducer(state, action);
 }

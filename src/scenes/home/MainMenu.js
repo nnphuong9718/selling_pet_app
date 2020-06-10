@@ -25,7 +25,7 @@ export default class CategoryProduct extends Component {
                 style={[styles.buttons, { backgroundColor: isSelected ? '#000' : '#FFF' }]}
                 onPress={() => this.onChangeIndex(pet.index)}
             >
-                <Text style={{ color: isSelected ? '#FFF' : '#515558', paddingVertical: 8, paddingHorizontal: 14, fontSize: responsiveFont(dims.Fonts.size.small) }}>{item.title}</Text>
+                <Text style={{ color: isSelected ? '#FFF' : '#A4A4A4', paddingVertical: 8, paddingHorizontal: 14, fontSize: responsiveFont(dims.Fonts.size.small) }}>{item.title}</Text>
             </TouchableOpacity>
         )
     }
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // backgroundColor: 'black', 
-        marginRight: 10,
-        borderColor: '#515558',
+        marginLeft: 14,
+        borderColor: '#A4A4A4',
         borderWidth: 0.5,
         borderRadius: 8,
     }

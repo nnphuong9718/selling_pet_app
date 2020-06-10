@@ -8,7 +8,6 @@ const initialState = Immutable.fromJS({
 export default (state = initialState, { type, payload }) => {
     switch (type) {
         case types.GET_LIST_PET_SUCCESS: {
-            console.log(payload)
             return state.merge({ listPet: payload })
         }
         default:

@@ -3,11 +3,12 @@ import { types, actions } from './actions';
 import api from './api'
 
 const getListPet = function* ({ payload }) {
-    console.log('aaaa')
+    // console.log('aaaa')
     const res = yield call(api.getListPet);
-    console.log(res)
-    if (res) {
-        yield put(actions.getListPetSuccess(res))
+    console.log('####', res)
+    if (res && res.success) {
+
+        yield put(actions.getListPetSuccess(res.data))
     } else {
         yield put(actions.getListPetFail())
     }

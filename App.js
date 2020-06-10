@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Provider } from 'react-redux'
 import store from './src/store'
-import { PersonalStack } from './src/navigation'
+import { PersonalStack, MainStack } from './src/navigation'
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +22,6 @@ export default class App extends Component {
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
                 let colorIcon;
-
                 if (route.name === 'Trang chủ') {
                   iconName = 'md-home';
                   colorIcon = focused ? '#1A9EFF' : '#515558'
@@ -40,7 +39,7 @@ export default class App extends Component {
               },
             })}
           >
-            <Tab.Screen name="Trang chủ" component={Home} />
+            <Tab.Screen name="Trang chủ" component={MainStack} />
             <Tab.Screen name="Danh mục" component={Category} />
             <Tab.Screen name="Tìm kiếm" component={Search} />
             <Tab.Screen name="Cá nhân" component={PersonalStack} />

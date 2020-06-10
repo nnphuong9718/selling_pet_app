@@ -6,19 +6,53 @@ import { images, icons } from '../../assets';
 // import SocialConnect from './SocialConnect'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
+// import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin'
+import AsyncStorage from '@react-native-community/async-storage';
+import { keys } from '../../utils/asyncStorage'
+import {GoogleSignin} from "@react-native-community/google-signin";
+
 
 export default class Personal extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            userInfo: null
+        }
     }
+
+    async componentDidMount() {
+        // const { user } = await GoogleSignin.signIn();
+        // console.log(user);
+        const _userInfo = await AsyncStorage.getItem(keys.userInfo);
+        this.setState({
+            userInfo: JSON.parse(_userInfo)
+        })
+
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.userInfo !== this.props.route.userInfo) {
+            console.log('Change')
+        }
+    }
+
     shareToSocialMedia = () => {
         console.log('#### ok')
-    }
+    };
     _goToLoginScreen = () => {
         this.props.navigation.navigate('UserScreen')
+    };
+
+    _logoutAccount = async () => {
+        await GoogleSignin.revokeAccess();
+        await AsyncStorage.multiRemove([keys.firebase,keys.userInfo]);
     }
     render() {
+
+        const { userInfo } = this.state;
+
+        // console.log('###', userInfoProps)
+        console.log('####', userInfo)
         return (
             <View style={{ flex: 1, backgroundColor: '#D8D8D8' }}>
                 <KeyboardAwareScrollView
@@ -32,7 +66,9 @@ export default class Personal extends Component {
 
                     <HeaderBar title='Cá nhân' />
                     <TouchableOpacity onPress={this._goToLoginScreen}>
-                        <InforBar />
+                        <InforBar
+                            userInfo={userInfo ? userInfo : null}
+                        />
                     </TouchableOpacity>
                     <ListItem
                         iconName={'ios-share-alt'}
@@ -77,6 +113,7 @@ export default class Personal extends Component {
                         iconName={'ios-log-out'}
                         iconSize={24}
                         title={'Đăng xuất'}
+                        onPress={this._logoutAccount}
                     />
 
                 </KeyboardAwareScrollView >

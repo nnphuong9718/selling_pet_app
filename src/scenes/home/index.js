@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Container, PaddingView } from '../../components'
 import HeaderBar from './HeaderBar';
 import SwipeItems from './SwipeItems'
 import MainMenu from './MainMenu'
@@ -8,11 +7,15 @@ import CategoryProduct from './CategoryProduct';
 import HeaderCategory from './HeaderCategory';
 import { screenWidth, screenHeight, dims } from '../../constants/dims'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { images } from '../../assets';
-import { responsiveFont } from '../../constants';
 
 import { connect } from 'react-redux'
 import { selectors, actions } from './services'
+
+
+const keyCat = 1;
+const keyDog = 2;
+const keyBird = 3;
+const keyMouse = 4;
 
 class Home extends Component {
     constructor(props) {
@@ -24,15 +27,35 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.getListPet();
-        const { listPet } = this.props;
-        console.log('####', listPet);
     }
+
     _getIndexPress = (index) => {
         this.setState({
             pressedIndex: index
         })
     }
+
+    _getListPetRender = (listPet) => {
+
+    }
+
+    _goToDetailScreen = (pet) => {
+        console.log('## pet id', pet);
+        this.props.navigation.navigate('Details', { pet: pet })
+    }
+
     render() {
+        const { listPet } = this.props;
+
+        console.log('###', listPet)
+
+        const listSale = listPet ? listPet.filter(pet => pet.promotion > 0) || [] : [];
+
+        const listDog = listPet ? listPet.filter(pet => pet.category_id === keyDog) || [] : [];
+
+        // const listPetRender = this.state.pressedIndex ? listPet.filter(pet => pet.type_animal == this.state.pressedIndex) : listPet;
+
+        // console.log('####', listPetRender);
         return (
             <View style={{ flex: 1 }}>
                 <HeaderBar />
@@ -44,33 +67,44 @@ class Home extends Component {
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
                 >
-                    <PaddingView>
+                    <View>
                         <View style={{ height: dims.screenHeight / 6, paddingVertical: 10 }}>
-                            <SwipeItems />
+                            {/* <SwipeItems /> */}
                         </View>
                         <HeaderCategory
+                            style={{ paddingHorizontal: 14 }}
                             leftTitle='Flash sale'
                         />
                         <MainMenu
                             getIndexPressed={index => this._getIndexPress(index)}
                         />
                         <CategoryProduct
+                            style={{ paddingHorizontal: 14 }}
+                            listPet={listSale || []}
                             pressedIndex={this.state.pressedIndex}
+                            inListPromotion={true}
+                            goToDetailScreen={id => this._goToDetailScreen(id)}
                         />
                         <HeaderCategory
+                            style={{ paddingHorizontal: 14 }}
                             leftTitle='Chó'
                         />
                         <CategoryProduct
-                            pressedIndex={0}
+                            style={{ paddingHorizontal: 14 }}
+                            listPet={listDog || []}
+                        // pressedIndex={0}
+                        // listPet={}
                         />
                         <HeaderCategory
+                            style={{ paddingHorizontal: 14 }}
                             leftTitle='Mèo cảnh'
                         />
                         <CategoryProduct
-                            pressedIndex={0}
+                            style={{ paddingHorizontal: 14 }}
+                        // pressedIndex={0}
                         />
-                    </PaddingView>
-                </KeyboardAwareScrollView >
+                    </View>
+                </KeyboardAwareScrollView>
             </View>
         )
     }

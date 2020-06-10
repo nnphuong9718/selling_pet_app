@@ -15,10 +15,10 @@ export default class CategoryProduct extends Component {
 
 
     render() {
-        const { leftTitle, type, onPress, children } = this.props;
+        const { leftTitle, type, onPress, children, style } = this.props;
         return (
             <View>
-                <View style={styles.containerListProduct}>
+                <View style={[styles.containerListProduct, style]}>
                     <Text style={styles.leftText}>
                         {leftTitle}
                     </Text>

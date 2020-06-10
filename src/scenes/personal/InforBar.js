@@ -7,6 +7,7 @@ import { dims, responsiveFont } from '../../constants'
 
 class InforBar extends Component {
     render() {
+        const { displayName, email, uid } = this.props.userInfo || '';
         return (
             <View style={styles.container}>
                 <View style={styles.leftContainer}>
@@ -14,9 +15,22 @@ class InforBar extends Component {
                         <Ionicons name='ios-person' size={30} color={'#FFF'} />
                     </View>
                     <View style={styles.inforStyle}>
-                        <Text style={styles.titleStyle}>TEST</Text>
-                        <Text style={styles.textStyle}>style 1</Text>
-                        <Text style={styles.textStyle}>style 1</Text>
+                        {displayName && email && uid ?
+                            <React.Fragment>
+                                <Text style={styles.titleStyle}>{displayName}</Text>
+                                <Text style={styles.textStyle}>{email}</Text>
+                                <Text style={styles.textStyle}>{uid}</Text>
+                            </React.Fragment>
+                            :
+                            <React.Fragment>
+                                <Text style={styles.textStyle}>
+                                    Chào mừng bạn đến với All4Pet
+                                </Text>
+                                <Text style={styles.bigTitleStyle}>
+                                    Đăng nhập/Đăng ký
+                                </Text>
+                            </React.Fragment>
+                        }
                     </View>
                 </View>
 
@@ -54,6 +68,10 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: responsiveFont(dims.Fonts.size.small - 2),
         color: '#6E6E6E'
+    },
+    bigTitleStyle: {
+        fontSize: responsiveFont(dims.Fonts.size.medium),
+        color: '#1A9EFF'
     },
     wrapIcon: {
         width: 48,
