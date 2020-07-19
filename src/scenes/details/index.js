@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, TouchableWithoutFeedback } from 'react-native'
-import { HeaderBarDetail, ListItem, PaddingView, ButtonCus } from '../../components'
+import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, ScrollView, EventEmitter } from 'react-native'
+import { HeaderBarDetail, PaddingView, ButtonCus } from '../../components'
 // import InforBar from './InforBar'
-import { images, icons } from '../../assets';
 // import SocialConnect from './SocialConnect'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { connect } from 'react-redux'
 
-import { screenWidth, screenHeight, dims, isIPhoneX } from '../../constants/dims'
+import { screenHeight, dims } from '../../constants/dims'
 import { responsiveFont } from '../../constants';
 import { numberFormat } from '../../utils/format'
 
 import HTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { keys } from '../../utils/asyncStorage'
+
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { emitter } from '../../utils/eventEmitter'
 
 class Product extends Component {
     constructor(props) {
@@ -24,7 +28,6 @@ class Product extends Component {
     }
     componentDidMount() {
         const { pet } = this.props.route.params;
-        console.log('###', pet.images)
     }
 
     backButtonPressed = () => {
@@ -35,12 +38,69 @@ class Product extends Component {
         this.props.navigation.popToTop();
     }
 
-    addToCart = (pet_id) => {
-        console.log(this.state.modalVisible)
-        // console.log('####', pet_id)
-        this.setState({
-            modalVisible: true
+    cartButtonPressed = () => {
+        this.props.navigation.navigate(
+            'Cart', {}
+        )
+    }
+
+    transformData = (array) => {
+        let arrayPetId = []
+
+        array.map(item => {
+            arrayPetId.push(item.pet_id)
         })
+        return arrayPetId;
+    }
+
+    checkDuplicate = (array, pet) => {
+        return array.indexOf(pet);
+    }
+
+    addToCart = async (pet) => {
+        let array = [];
+        await AsyncStorage.getItem(keys.cart)
+            .then((value) => {
+                const _value = JSON.parse(value);
+                if (!_value) {
+                    const data = {
+                        ...pet,
+                        nums: 1,
+                    }
+                    array.push(data);
+                    AsyncStorage.setItem(keys.cart, JSON.stringify(array),
+                        this.setState({
+                            modalVisible: true
+                        }),
+
+                    )
+                    emitter.emit('RELOAD_CART')
+                } else {
+                    array = JSON.parse(value);
+                    // const arrayPetId = this.transformData(array);
+                    // console.log('$$$#', arrayPetId)
+
+                    // const checked = this.checkDuplicate(arrayPetId, pet.pet_id);
+                    // console.log('###', checked)
+                    // if (checked) {
+                    //     let petDuplicate = {
+                    //         ...pet,
+                    //         nums: nums + 1,
+                    //     }
+                    //     array.splice(checked, 0, petDuplicate)
+                    // } else {
+                    //     array.push(pet);
+                    // }
+                    array.map((item) => item.pet_id === pet.pet_id ? console.log('duplicate') : array.push(pet))
+                    // array.push(pet)
+                    AsyncStorage.setItem(keys.cart, JSON.stringify(array),
+                        this.setState({
+                            modalVisible: true
+                        }))
+                    emitter.emit('RELOAD_CART')
+                }
+            })
+        // await AsyncStorage.removeItem(keys.cart)
     }
 
     closeModal = () => {
@@ -61,13 +121,18 @@ class Product extends Component {
         // console.log('###', pet.)
 
         const { pet_id, images, pet_description, price, promotion } = pet;
+
         return (
-            <TouchableWithoutFeedback onPress={this.closeModal}>
-                <View style={{ flex: 1 }}>
-                    <HeaderBarDetail
-                        onPressBack={this.backButtonPressed}
-                        onPressHome={this.homeButtonPressed}
-                    />
+
+            <View style={{ flex: 1 }} >
+                <HeaderBarDetail
+                    onPressBack={this.backButtonPressed}
+                    onPressHome={this.homeButtonPressed}
+                    onPressCart={this.cartButtonPressed}
+                />
+                <ScrollView
+
+                >
                     <KeyboardAwareScrollView
                         innerRef={ref => {
                             this.scroll = ref;
@@ -102,7 +167,7 @@ class Product extends Component {
                                 title='Chọn mua'
                                 style={{ backgroundColor: '#FE2E2E', paddingVertical: 12 }}
                                 titleStyle={{ color: '#FFF', fontSize: responsiveFont(dims.Fonts.size.medium) }}
-                                onPress={() => this.addToCart(pet_id)}
+                                onPress={() => this.addToCart(pet)}
                             />
                             <HTML html={`<p>Giao hàng tới <b>address user</b></p>`} />
                             <Modal
@@ -152,9 +217,9 @@ class Product extends Component {
                             </Modal>
                         </PaddingView>
                     </KeyboardAwareScrollView>
+                </ScrollView>
+            </View >
 
-                </View>
-            </TouchableWithoutFeedback >
         )
     }
 }

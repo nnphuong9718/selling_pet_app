@@ -40,17 +40,16 @@ class Home extends Component {
     }
 
     _goToDetailScreen = (pet) => {
-        console.log('## pet id', pet);
         this.props.navigation.navigate('Details', { pet: pet })
+    }
+
+    onOpenCart = () => {
+        this.props.navigation.navigate('Cart', {});
     }
 
     render() {
         const { listPet } = this.props;
-
-        console.log('###', listPet)
-
         const listSale = listPet ? listPet.filter(pet => pet.promotion > 0) || [] : [];
-
         const listDog = listPet ? listPet.filter(pet => pet.category_id === keyDog) || [] : [];
 
         // const listPetRender = this.state.pressedIndex ? listPet.filter(pet => pet.type_animal == this.state.pressedIndex) : listPet;
@@ -58,7 +57,9 @@ class Home extends Component {
         // console.log('####', listPetRender);
         return (
             <View style={{ flex: 1 }}>
-                <HeaderBar />
+                <HeaderBar
+                    onPressCart={this.onOpenCart}
+                />
                 <KeyboardAwareScrollView
                     innerRef={ref => {
                         this.scroll = ref;
@@ -68,8 +69,8 @@ class Home extends Component {
                     keyboardShouldPersistTaps="handled"
                 >
                     <View>
-                        <View style={{ height: dims.screenHeight / 6, paddingVertical: 10 }}>
-                            {/* <SwipeItems /> */}
+                        <View style={{ height: dims.screenHeight / 6, paddingVertical: 10, marginHorizontal: 20 }}>
+                            <SwipeItems />
                         </View>
                         <HeaderCategory
                             style={{ paddingHorizontal: 14 }}
@@ -80,7 +81,7 @@ class Home extends Component {
                         />
                         <CategoryProduct
                             style={{ paddingHorizontal: 14 }}
-                            listPet={listSale || []}
+                            listPet={listPet || []}
                             pressedIndex={this.state.pressedIndex}
                             inListPromotion={true}
                             goToDetailScreen={id => this._goToDetailScreen(id)}

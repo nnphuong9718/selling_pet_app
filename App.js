@@ -7,6 +7,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Provider } from 'react-redux'
 import store from './src/store'
 import { PersonalStack, MainStack } from './src/navigation'
+import { StatusBar } from 'react-native';
+import { Colors } from './src/constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,6 +17,7 @@ export default class App extends Component {
   render() {
 
     return (
+
       <Provider store={store}>
         <NavigationContainer>
           <Tab.Navigator
@@ -44,8 +47,10 @@ export default class App extends Component {
             <Tab.Screen name="Tìm kiếm" component={Search} />
             <Tab.Screen name="Cá nhân" component={PersonalStack} />
           </Tab.Navigator>
+
         </NavigationContainer >
-      </Provider >
+
+      </Provider>
     )
   }
 }

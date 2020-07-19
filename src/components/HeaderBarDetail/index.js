@@ -44,7 +44,7 @@ class HeaderBarDetail extends Component<Props> {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.button}
-                                onPressCart={onPressCart}>
+                                onPress={onPressCart}>
                                 <Ionicons name={'md-cart'} size={24} color={'#A4A4A4'} />
                             </TouchableOpacity>
                         </View>

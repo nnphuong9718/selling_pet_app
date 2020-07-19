@@ -1,10 +1,8 @@
 import axios from 'axios'
 
-const baseURL = 'http://10.45.212.108:3000'
+const baseURL = 'http://172.16.2.213:3000'
 
 export const fetch = (method, path, params) => {
-    console.log(method)
-    // console.log(axios.method)
     if (!params) {
         params = {}
     }
@@ -12,24 +10,17 @@ export const fetch = (method, path, params) => {
         'Content-Type': 'application/json',
     };
     return new Promise((resolve, reject) => {
-        // axios.method(baseURL + '/movies.json', config)
-        //     .then(response => {
-        //         resolve(response.data)
-        //     })
-        //     .catch(error => {
-        //         reject(error);
-        //     })
         axios({
             method: method,
             url: baseURL + path,
             config: config,
-            // data: params
+            data: params
         })
             .then(response => {
                 resolve(response.data)
             })
             .catch(error => {
-                // reject(error)
+                reject(error)
             })
     })
 }

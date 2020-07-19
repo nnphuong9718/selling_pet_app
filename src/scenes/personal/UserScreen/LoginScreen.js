@@ -30,9 +30,7 @@ class LoginScreen extends Component {
     }
 
     onAuthStateChanged = async (user) => {
-        console.log('####', user)
 
-        console.log('token', this.state.idToken)
 
         if (user) {
             this.props.navigation.navigate('Cá nhân', {

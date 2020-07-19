@@ -1,7 +1,8 @@
 const icons = {
     search: require('./icons/search.png'),
     iconCart: require('./icons/cartIcon.png'),
-    iconPet: require('./icons/iconPet.png')
+    iconPet: require('./icons/iconPet.png'),
+    walletIcon: require('./icons/walletIcon.png')
 }
 
 const images = {
@@ -22,6 +23,7 @@ const images = {
     pet_9: require('./images/pet_9.jpg'),
     pet_10: require('./images/pet_10.jpg'),
     pet_11: require('./images/pet_11.jpg'),
+    emptyCart: require('./images/empty-cart.png'),
 }
 
 export { icons, images }

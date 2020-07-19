@@ -28,7 +28,7 @@ export default class CategoryProduct extends Component {
                         <View style={{ borderRadius: 8, overflow: 'hidden' }}>
                             <Image
                                 source={{ uri: images }}
-                                style={{ resizeMode: 'cover', width: dims.screenWidth / 5, height: 140 }}
+                                style={{ resizeMode: 'contain', width: dims.screenWidth / 5, height: 120, }}
                             />
                         </View>
                         <Text style={{ alignSelf: 'center', paddingTop: 8, fontWeight: 'bold' }}>{`${numberFormat(price)} đ`}</Text>

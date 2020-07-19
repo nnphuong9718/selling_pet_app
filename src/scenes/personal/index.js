@@ -3,13 +3,11 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { HeaderBar, ListItem } from '../../components'
 import InforBar from './InforBar'
 import { images, icons } from '../../assets';
-// import SocialConnect from './SocialConnect'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-// import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin'
 import AsyncStorage from '@react-native-community/async-storage';
 import { keys } from '../../utils/asyncStorage'
-import {GoogleSignin} from "@react-native-community/google-signin";
+import { GoogleSignin } from "@react-native-community/google-signin";
 
 
 export default class Personal extends Component {
@@ -31,7 +29,7 @@ export default class Personal extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.userInfo !== this.props.route.userInfo) {
+        if (prevProps.userInfo !== this.props.route.userInfo) {
             console.log('Change')
         }
     }
@@ -45,14 +43,17 @@ export default class Personal extends Component {
 
     _logoutAccount = async () => {
         await GoogleSignin.revokeAccess();
-        await AsyncStorage.multiRemove([keys.firebase,keys.userInfo]);
+        await AsyncStorage.multiRemove([keys.firebase, keys.userInfo],
+            this.setState({
+                userInfo: null,
+            })
+        );
     }
     render() {
-
         const { userInfo } = this.state;
 
-        // console.log('###', userInfoProps)
-        console.log('####', userInfo)
+        console.log('###', userInfo);
+
         return (
             <View style={{ flex: 1, backgroundColor: '#D8D8D8' }}>
                 <KeyboardAwareScrollView
