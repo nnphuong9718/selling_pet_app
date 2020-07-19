@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 const keys = {
     firebase: 'firebase_token',
     userInfo: 'user_info_login',
-    cart: 'cart'
+    cart: 'cart',
+    historySearch: 'history_search',
 }
 
 const getItem = async (keys) => {

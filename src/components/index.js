@@ -7,5 +7,6 @@ import HeaderBar from './HeaderBar'
 import ListItem from './ListItem'
 import HeaderBarDetail from './HeaderBarDetail'
 import BlockView from './BlockView'
+import SearchHeader from './SearchHeader'
 
-export { ButtonCus, Container, PaddingView, SearchBar, Swipe, HeaderBar, ListItem, HeaderBarDetail, BlockView }
+export { ButtonCus, Container, PaddingView, SearchBar, Swipe, HeaderBar, ListItem, HeaderBarDetail, BlockView, SearchHeader }

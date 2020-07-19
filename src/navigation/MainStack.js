@@ -8,6 +8,7 @@ import Payment1 from '../scenes/payments/Step1';
 import Payment2 from '../scenes/payments/Step2';
 import Payment3 from '../scenes/payments/Step3';
 import Payment4 from '../scenes/payments/Step4';
+import SearchResult from '../scenes/searchResult'
 import { Colors } from '../constants';
 import { StatusBar } from 'react-native';
 
@@ -75,6 +76,12 @@ function MainStackScreen() {
                     headerStyle: { backgroundColor: Colors.blue },
                     headerTitleStyle: { color: '#FFF' },
                 }}
+            />
+            <MainStack.Screen name="SearchResult" component={SearchResult}
+                options={{
+                    headerShown: false
+                }}
+
             />
         </MainStack.Navigator>
         // </StatusBar >

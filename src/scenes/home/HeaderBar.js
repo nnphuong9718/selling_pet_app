@@ -40,6 +40,9 @@ class HeaderBar extends Component {
     onPressCart = () => {
         this.props.onPressCart();
     }
+    onPressSearchBar = () => {
+        this.props.onPressSearchBar();
+    }
     render() {
         const { numOfProducts } = this.state;
         return (
@@ -54,6 +57,7 @@ class HeaderBar extends Component {
                             placeholder='Bạn tìm gì hôm nay...'
                             onChangeText={(text) => this.handleSearch(text)}
                             placeholderTextColor='#000'
+                            onPress={this.onPressSearchBar}
                         />
                     </View>
                     <View style={{ flex: 0.1, flexDirection: 'row' }}>

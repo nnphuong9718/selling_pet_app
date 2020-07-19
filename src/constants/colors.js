@@ -5,5 +5,7 @@ export const Colors = {
     black: '#000',
     white: '#FFF',
     green: '#04B486',
-    orange: '#FFBF00'
+    orange: '#FFBF00',
+    grayText2: '#585858',
+    red: '#FF0000',
 }

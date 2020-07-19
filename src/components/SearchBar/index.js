@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
 import { icons } from '../../assets'
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
     maxLength: Number,
     containerStyle: Object,
     placeholderTextColor: String,
+    onPress: Function,
 }
 
 class SearchBar extends Component<Props> {
@@ -18,22 +19,27 @@ class SearchBar extends Component<Props> {
         onChangeText: () => { },
         maxLength: 99,
         containerStyle: {},
-        placeholderTextColor: '#FFF'
+        placeholderTextColor: '#FFF',
+        onPress: () => { },
     }
 
     render() {
-        const { placeholder, style, onChangeText, maxLength, containerStyle, placeholderTextColor } = this.props;
+        const { placeholder, style, onChangeText, maxLength, containerStyle, placeholderTextColor, onPress } = this.props;
         return (
-            <View style={[styles.container, containerStyle]}>
-                <Image source={icons.search} style={{ width: 23, height: 23, marginRight: 10 }} />
-                <TextInput
+            <TouchableOpacity
+                onPress={onPress}
+                style={[styles.container, containerStyle]}>
+                <Image source={icons.search} style={{ width: 23, height: 23, marginHorizontal: 10 }} />
+                <View
                     style={style}
-                    placeholder={placeholder}
-                    onChangeText={onChangeText}
-                    maxLength={maxLength}
-                    placeholderTextColor={placeholderTextColor}
-                />
-            </View>
+                // placeholder={placeholder}
+                // onChangeText={onChangeText}
+                // maxLength={maxLength}
+                // placeholderTextColor={placeholderTextColor}
+                >
+                    <Text>{placeholder}</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 }

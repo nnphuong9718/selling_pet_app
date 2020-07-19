@@ -47,18 +47,23 @@ class Home extends Component {
         this.props.navigation.navigate('Cart', {});
     }
 
+    goToSearchScreen = () => {
+        console.log('aaaa')
+        this.props.navigation.navigate('Tìm kiếm', {});
+    }
+
     render() {
         const { listPet } = this.props;
         const listSale = listPet ? listPet.filter(pet => pet.promotion > 0) || [] : [];
-        const listDog = listPet ? listPet.filter(pet => pet.category_id === keyDog) || [] : [];
+        const listDog = listPet ? listPet.filter(pet => pet.category_id === keyDog && !pet.promotion) || [] : [];
+        const listCat = listPet ? listPet.filter(pet => pet.category_id === keyCat && !pet.promotion) || [] : [];
 
-        // const listPetRender = this.state.pressedIndex ? listPet.filter(pet => pet.type_animal == this.state.pressedIndex) : listPet;
 
-        // console.log('####', listPetRender);
         return (
             <View style={{ flex: 1 }}>
                 <HeaderBar
                     onPressCart={this.onOpenCart}
+                    onPressSearchBar={this.goToSearchScreen}
                 />
                 <KeyboardAwareScrollView
                     innerRef={ref => {
@@ -81,7 +86,7 @@ class Home extends Component {
                         />
                         <CategoryProduct
                             style={{ paddingHorizontal: 14 }}
-                            listPet={listPet || []}
+                            listPet={listSale || []}
                             pressedIndex={this.state.pressedIndex}
                             inListPromotion={true}
                             goToDetailScreen={id => this._goToDetailScreen(id)}
@@ -93,6 +98,7 @@ class Home extends Component {
                         <CategoryProduct
                             style={{ paddingHorizontal: 14 }}
                             listPet={listDog || []}
+                            goToDetailScreen={id => this._goToDetailScreen(id)}
                         // pressedIndex={0}
                         // listPet={}
                         />
@@ -102,6 +108,8 @@ class Home extends Component {
                         />
                         <CategoryProduct
                             style={{ paddingHorizontal: 14 }}
+                            listPet={listCat || []}
+                            goToDetailScreen={id => this._goToDetailScreen(id)}
                         // pressedIndex={0}
                         />
                     </View>

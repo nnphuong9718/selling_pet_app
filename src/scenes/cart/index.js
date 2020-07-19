@@ -16,9 +16,9 @@ import HTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import CartProducts from './CartProducts'
 
-import { keys } from '../../utils/asyncStorage';
+import * as AsyncStorage from '../../utils/asyncStorage';
 
-import AsyncStorage from '@react-native-community/async-storage'
+// import AsyncStorage from '@react-native-community/async-storage'
 
 import _ from 'lodash'
 
@@ -35,7 +35,8 @@ export default class Cart extends Component {
     }
 
     async componentDidMount() {
-        const data = await AsyncStorage.getItem(keys.cart);
+        const { keys, getItem } = AsyncStorage;
+        const data = await getItem(keys.cart);
         const _data = JSON.parse(data);
         // console.log('##', _data)
         this.setState({
@@ -44,13 +45,50 @@ export default class Cart extends Component {
     }
 
     transformData = (array) => {
-        array.map(item => item.pet_id)
+
+    }
+
+    onRemoveItem = async (item) => {
+        const { keys, setItem, removeItem } = AsyncStorage;
+
+        console.log(item.pet_id);
+
+        const { listPets } = this.state;
+
+        console.log('list', listPets)
+
+
+        console.log('###', listPets.indexOf(item))
+        if (listPets.length === 1) {
+            this.setState({
+                listPets: []
+            })
+            await removeItem(keys.cart);
+        }
+        else {
+            listPets.map(pet => pet.pet_id === item.pet_id ?
+
+                // await removeItem(keys.cart, item)
+                // console.log('###', listPets)
+                this.setState({
+                    listPets: listPets.splice(listPets.indexOf(item), 1)
+                })
+                : console.log('false'));
+
+            console.log('###', listPets)
+            await setItem(keys.cart, JSON.stringify(listPets))
+        }
+        // console.log('###', item)
+
+
+
     }
 
 
 
     renderItem = (item) => {
         const { pet_id, images, promotion, pet_description, pet_name, price, category_id } = item.item;
+        // console.log('###', item)
         // console.log('##', item);
         return (
             <View>
@@ -66,9 +104,7 @@ export default class Cart extends Component {
                             {`${numberFormat(price)} đ`}
                         </Text>
                         <View style={{ flexDirection: 'row' }}>
-
                             <TouchableOpacity
-                                onPress={() => { }}
                                 style={styles.button}>
                                 <Ionicons name={'ios-remove'} size={18} color={'#000'} />
                             </TouchableOpacity>
@@ -81,9 +117,12 @@ export default class Cart extends Component {
 
                         </View>
                     </View>
-                    <View style={{ flex: 0.1, alignItems: 'center' }}>
+                    <TouchableOpacity
+                        onPress={() => this.onRemoveItem(item.item)}
+                        style={{ flex: 0.1, alignItems: 'center' }}
+                    >
                         <Ionicons name={'ios-close'} size={30} color={'#BDBDBD'} />
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
             </View>
@@ -129,48 +168,22 @@ export default class Cart extends Component {
         )
     }
 
+    backToHome = () => {
+        this.props.navigation.popToTop(
+            { reload: 'abc' }
+        )
+
+    }
+
+
+
 
 
     render() {
-        // const listPets = [
-        //     {
-        //         category_id: 2,
-        //         images: "https://www.upsieutoc.com/images/2020/06/07/pet_6.jpg",
-        //         pet_description: "Chó corgy 6 tháng tuổi lông vàng",
-        //         pet_id: 1,
-        //         pet_name: "Chó corgy",
-        //         price: 1200000,
-        //         promotion: 20,
-        //     },
-        //     {
-        //         category_id: 2,
-        //         images: "https://www.upsieutoc.com/images/2020/06/07/pet_7.jpg",
-        //         pet_description: "Chó husky 1 năm tuổi",
-        //         pet_id: 2,
-        //         pet_name: "Chó husky",
-        //         price: 2500000,
-        //         promotion: 0,
-        //     },
-        //     {
-        //         category_id: 1,
-        //         images: "https://www.upsieutoc.com/images/2020/06/07/pet_7.jpg",
-        //         pet_description: "Chó husky 1 năm tuổi",
-        //         pet_id: 3,
-        //         pet_name: "Chó husky",
-        //         price: 2500000,
-        //         promotion: 0,
-        //     },
-        //     {
-        //         category_id: 1,
-        //         images: "https://www.upsieutoc.com/images/2020/06/07/pet_7.jpg",
-        //         pet_description: "Chó husky 1 năm tuổi",
-        //         pet_id: 4,
-        //         pet_name: "Chó husky",
-        //         price: 2500000,
-        //         promotion: 0,
-        //     }
-        // ]
+
         const { listPets, discountAmount } = this.state;
+
+        // console.log('###', listPets)
         // const object = this.transformData(listPets || [])
 
         const totalPrice = listPets ? this.calculateTotalPrice(discountAmount) : 0;
@@ -280,7 +293,7 @@ export default class Cart extends Component {
                                 title="TIẾP TỤC MUA SẮM"
                                 style={{ backgroundColor: '#FE2E2E', borderRadius: 5, paddingVertical: 8, width: '100%', marginBottom: 8 }}
                                 titleStyle={{ color: '#FFF', fontSize: responsiveFont(dims.Fonts.size.medium), fontWeight: '500' }}
-                                onPress={() => this.props.navigation.popToTop()}
+                                onPress={this.backToHome}
                             />
                         </View>
                     </View>
