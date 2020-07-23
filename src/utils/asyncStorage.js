@@ -5,6 +5,8 @@ const keys = {
     userInfo: 'user_info_login',
     cart: 'cart',
     historySearch: 'history_search',
+    uid: 'uid',
+    userInforFull: 'user_infor',
 }
 
 const getItem = async (keys) => {
@@ -18,12 +20,12 @@ const getItem = async (keys) => {
     }
 }
 
-const setItem = async (keys) => {
+const setItem = async (keys, jsonValue) => {
     if (!keys) {
         return undefined;
     }
     try {
-        return await AsyncStorage.setItem(keys);
+        return await AsyncStorage.setItem(keys, jsonValue);
     } catch (error) {
         throw error;
     }
@@ -40,4 +42,12 @@ const removeItem = async (keys) => {
     }
 }
 
-export { keys, setItem, getItem, removeItem }
+const multiRemoveItems = async (keys: Array<string>) => {
+    const result = [];
+    keys.forEach(async (key: string, index: number) => {
+        result[index] = removeItem(key);
+    });
+    return Promise.all(result);
+};
+
+export { keys, setItem, getItem, removeItem, multiRemoveItems }

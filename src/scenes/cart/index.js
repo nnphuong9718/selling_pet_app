@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, TouchableWithoutFeedback, FlatList, TextInput, ScrollView } from 'react-native'
-import { HeaderBarDetail, ListItem, PaddingView, ButtonCus } from '../../components'
+import { PaddingView, ButtonCus } from '../../components'
 // import InforBar from './InforBar'
 import { images, icons } from '../../assets';
 // import SocialConnect from './SocialConnect'
@@ -8,15 +8,15 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { connect } from 'react-redux'
 
-import { screenWidth, screenHeight, dims, isIPhoneX } from '../../constants/dims'
+import { dims } from '../../constants/dims'
 import { responsiveFont } from '../../constants';
 import { numberFormat } from '../../utils/format'
 
-import HTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import CartProducts from './CartProducts'
+
 
 import * as AsyncStorage from '../../utils/asyncStorage';
+import { emitter } from '../../utils/eventEmitter'
 
 // import AsyncStorage from '@react-native-community/async-storage'
 
@@ -31,6 +31,7 @@ export default class Cart extends Component {
             petCount: 1,
             promotionCode: '',
             discountAmount: 0,
+            userInfor: {}
         }
     }
 
@@ -42,6 +43,12 @@ export default class Cart extends Component {
         this.setState({
             listPets: _data
         })
+        await getItem(keys.userInforFull).then(value => {
+            this.setState({
+                userInfor: JSON.parse(value),
+            })
+        })
+        emitter.emit('RELOAD_CART', 10);
     }
 
     transformData = (array) => {
@@ -64,6 +71,7 @@ export default class Cart extends Component {
                 listPets: []
             })
             await removeItem(keys.cart);
+            emitter.emit('RELOAD_CART', 10)
         }
         else {
             listPets.map(pet => pet.pet_id === item.pet_id ?
@@ -77,11 +85,9 @@ export default class Cart extends Component {
 
             console.log('###', listPets)
             await setItem(keys.cart, JSON.stringify(listPets))
+            emitter.emit('RELOAD_CART', 10)
         }
         // console.log('###', item)
-
-
-
     }
 
 
@@ -103,19 +109,7 @@ export default class Cart extends Component {
                         <Text style={[styles.priceStyle, { paddingVertical: 6 }]}>
                             {`${numberFormat(price)} đ`}
                         </Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity
-                                style={styles.button}>
-                                <Ionicons name={'ios-remove'} size={18} color={'#000'} />
-                            </TouchableOpacity>
-                            <Text style={[styles.titleStyle, { paddingHorizontal: 8 }]}>
-                                {this.state.petCount}
-                            </Text>
-                            <TouchableOpacity style={styles.button}>
-                                <Ionicons name={'ios-add'} size={18} color={'#000'} />
-                            </TouchableOpacity>
 
-                        </View>
                     </View>
                     <TouchableOpacity
                         onPress={() => this.onRemoveItem(item.item)}
@@ -157,15 +151,23 @@ export default class Cart extends Component {
         }
     }
 
-    _goToPaymentStep1 = (totalPrice) => {
-        console.log('###', totalPrice)
-        this.props.navigation.navigate(
-            'Payment1',
-            {
-                user_id: '',
-                amount: totalPrice,
-            }
-        )
+    _goToPaymentStep1 = (totalPrice, listPets) => {
+        const { userInfor } = this.state;
+        if (!userInfor) {
+            this.props.navigation.navigate('Cá nhân')
+            setTimeout(() => this.props.navigation.navigate('UserScreen'), 10)
+
+        } else {
+            this.props.navigation.navigate(
+                'Payment1',
+                {
+                    user_id: '',
+                    amount: totalPrice,
+                    listPets,
+                    userInfor
+                }
+            )
+        }
     }
 
     backToHome = () => {
@@ -273,7 +275,7 @@ export default class Cart extends Component {
                                     title='TIẾN HÀNH ĐẶT HÀNG'
                                     style={{ backgroundColor: '#FE2E2E', paddingVertical: 8, borderRadius: 5 }}
                                     titleStyle={{ color: '#FFF', fontSize: responsiveFont(dims.Fonts.size.medium) }}
-                                    onPress={() => this._goToPaymentStep1(totalPrice)}
+                                    onPress={() => this._goToPaymentStep1(totalPrice, listPets)}
                                 />
                             </View>
 

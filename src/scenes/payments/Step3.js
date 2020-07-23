@@ -24,32 +24,51 @@ class Step3 extends Component {
         return `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`
     }
 
+    transformData = (array) => {
+        let arrayPetId = []
+
+        array.map(item => {
+            arrayPetId.push(item.pet_id)
+        })
+        return arrayPetId;
+    }
+
     goToStep4 = () => {
-        const { amount } = this.props.route.params;
+        const { amount, listPets, userInfor, paymentType, transferType } = this.props.route.params;
+
+        const billId = this.generateBillCode();
         // console.log('###', amount);
         const onSuccess = () => {
             this.props.navigation.navigate('Payment4', {
-                paymentType: 'test',
-                transferType: 'test',
+                paymentType: paymentType,
+                transferType: transferType,
+                billId,
+                amount,
+                transferTime: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
             })
         }
         const onError = () => {
             console.log('###, onError');
         }
+
+        const arrayId = this.transformData(listPets);
         const paymentInfo = {
             amount,
-            billId: this.generateBillCode(),
+            billId,
             createDate: new Date().getTime(),
             paymentType: 'COD',
-            petId: `1,2`,
+            petId: JSON.stringify(arrayId),
             transferTime: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
-            userId: 1,
+            userId: userInfor.uid,
+            phoneNumer: userInfor.phoneNumber,
+            address: userInfor.address
         }
         this.props.paymentBill(paymentInfo, onSuccess, onError)
     }
 
     render() {
         const { userAddress } = this.props;
+        const { amount, listPets, userInfor, paymentType, transferType } = this.props.route.params;
         return (
             <View style={styles.container}>
                 <HeaderBarPayment
@@ -60,7 +79,7 @@ class Step3 extends Component {
                             Địa chỉ người nhận
                         </Text>
                         <Text style={styles.titleText}>
-                            Test
+                            {userInfor.address}
                         </Text>
                         <Text style={styles.valueText}>
                             {userAddress && userAddress[0] ? userAddress[0].user_address : ''}
@@ -71,7 +90,7 @@ class Step3 extends Component {
                             Hình thức giao hàng
                         </Text>
                         <Text style={styles.valueText}>
-                            Test
+                            {transferType}
                         </Text>
                     </View>
                     <View style={styles.containerBlockView}>
@@ -79,7 +98,7 @@ class Step3 extends Component {
                             Hình thức thanh toán
                         </Text>
                         <Text style={styles.valueText}>
-                            Test
+                            {paymentType}
                         </Text>
                     </View>
                     <View></View>

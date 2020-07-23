@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import PersonalScreen from '../scenes/personal';
 import UserScreen from '../scenes/personal/UserScreen'
+import UserInfoScreen from '../scenes/personal/PersonalScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const PersonalStack = createStackNavigator();
@@ -15,6 +16,17 @@ function PersonalStackScreen() {
                 component={UserScreen}
                 options={{
                     title: 'Đăng nhập / Đăng ký',
+                    headerTintColor: '#FFF',
+                    headerStyle: { backgroundColor: '#1A9EFF' },
+                    headerTitleStyle: { fontWeight: 'bold', color: '#FFF' },
+                    headerBackImage: null
+                }}
+            />
+            <PersonalStack.Screen
+                name="UserInfoScreen"
+                component={UserInfoScreen}
+                options={{
+                    title: 'Thông tin tài khoản',
                     headerTintColor: '#FFF',
                     headerStyle: { backgroundColor: '#1A9EFF' },
                     headerTitleStyle: { fontWeight: 'bold', color: '#FFF' },

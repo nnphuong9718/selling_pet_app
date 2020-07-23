@@ -9,32 +9,19 @@ import { styles } from './styles'
 const optionsTransfer = [
     {
         id: 0,
-        description: 'test option 1',
-        // selected: true,
+        description: 'Nhận hàng sau 2 ngày',
+        price: 200000,
+        selected: true,
     },
-    {
-        id: 1,
-        description: 'test option 2',
-        // selected: false,
-    }
 ]
 
 const optionsPayment = [
     {
         id: 0,
-        description: 'test payment 1',
-        // selected: true,
+        description: 'COD',
+        selected: true,
     },
-    {
-        id: 1,
-        description: 'test payment 2',
-        // selected: false,
-    },
-    {
-        id: 2,
-        description: 'test payment 3',
-        // selected: false
-    }
+
 ]
 
 export default class Step2 extends Component {
@@ -66,7 +53,7 @@ export default class Step2 extends Component {
     renderCheckbox = (option) => {
         // console.log(option);
         const { item } = option;
-        console.log('###', item)
+        // console.log('###', item)
 
         const { checkboxTransferId } = this.state;
 
@@ -81,16 +68,21 @@ export default class Step2 extends Component {
                     </View>
                 </TouchableOpacity>
                 <View style={{ paddingLeft: 8 }}>
-                    <Text>{item.description}</Text>
+                    <Text>{`${item.description} (${item.price ? item.price : ''})`}</Text>
                 </View>
             </View>
         )
     }
     goToStep3 = () => {
-        const { amount } = this.props.route.params;
+        const { amount, listPets, userInfor } = this.props.route.params;
+        const sumAmount = amount + parseInt(optionsTransfer[0].price);
         this.props.navigation.navigate('Payment3',
             {
-                amount,
+                amount: sumAmount,
+                listPets,
+                userInfor,
+                paymentType: optionsPayment[0].description,
+                transferType: optionsTransfer[0].description
             });
     }
     render() {

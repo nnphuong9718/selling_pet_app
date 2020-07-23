@@ -22,16 +22,19 @@ class Step1 extends Component {
         console.log('####', amount);
     }
     _goToPaymentStep2 = () => {
-        const { amount } = this.props.route.params;
+        const { amount, listPets, userInfor } = this.props.route.params;
         this.props.navigation.navigate('Payment2',
             {
                 amount,
+                listPets,
+                userInfor
             });
     }
 
     render() {
         const { userAddress } = this.props;
-        // console.log('@@@', userAddress);
+        const { userInfor } = this.props.route.params;
+        console.log('@@@', userInfor);
         return (
             <View style={styles.container}>
                 <View>
@@ -47,9 +50,9 @@ class Step1 extends Component {
                             </View>
                         </View>
                         <View style={{ flex: 4 }}>
-                            <Text>Phuonggg</Text>
+                            <Text>{userInfor.fullName}</Text>
                             <Text>
-                                {userAddress && userAddress[0] ? userAddress[0].user_address : ''}
+                                {userInfor.address}
                             </Text>
                         </View>
                         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>

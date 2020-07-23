@@ -7,6 +7,8 @@ import { styles } from './styles'
 import { connect } from 'react-redux';
 import * as AsyncStorage from '../../utils/asyncStorage'
 
+import { emitter } from '../../utils/eventEmitter';
+
 
 
 class Step4 extends Component {
@@ -24,9 +26,17 @@ class Step4 extends Component {
     //         {
     //         });
     // }
+    homeButtonPressed = () => {
+        emitter.emit('RELOAD_CART', 10);
+        this.props.navigation.popToTop();
+    }
 
+    convertDateTime = (date) => {
+        const standardDate = new Date(date);
+        return `${standardDate.getHours()}:${standardDate.getMinutes()} - ${standardDate.getDate()}/${standardDate.getMonth() + 1}/${standardDate.getFullYear()}`
+    }
     render() {
-        const { transferType, paymentType } = this.props.route.params;
+        const { transferType, paymentType, amount, billId, transferTime } = this.props.route.params;
 
         return (
             <View style={styles.container}>
@@ -38,7 +48,7 @@ class Step4 extends Component {
                     <Text style={styles.titleText}>
                         Cảm ơn bạn đã mua sắm tại All 4 Pet với mã đơn hàng:
                         <Text style={[styles.titleText, { color: '#FFBF00' }]}>
-                            {` Test`}
+                            {`${billId}`}
                         </Text>
                     </Text>
                     <View style={{ paddingVertical: 16 }}>
@@ -46,21 +56,21 @@ class Step4 extends Component {
                             <View style={{ width: 10, height: 10, borderRadius: 10 / 2, backgroundColor: Colors.orange, marginRight: 10 }}>
                             </View>
                             <Text style={styles.valueText}>Giao vào
-                                <Text style={styles.valueText}>{` ${transferType}`}</Text>
+                                <Text style={styles.valueText}>{` ${this.convertDateTime(transferTime)}`}</Text>
                             </Text>
                         </View>
                         <View style={[styles.rowStyle, { paddingVertical: 10 }]}>
                             <View style={{ width: 10, height: 10, borderRadius: 10 / 2, backgroundColor: Colors.orange, marginRight: 10 }}>
                             </View>
-                            <Text style={styles.valueText}>Giao vào
-                                <Text style={styles.valueText}>{` ${transferType}`}</Text>
+                            <Text style={styles.valueText}>Hình thức thanh toán
+                                <Text style={styles.valueText}>{` ${paymentType}`}</Text>
                             </Text>
                         </View>
                         <View style={styles.rowStyle}>
                             <View style={{ width: 10, height: 10, borderRadius: 10 / 2, backgroundColor: Colors.orange, marginRight: 10 }}>
                             </View>
-                            <Text style={styles.valueText}>Giao vào
-                                <Text style={styles.valueText}>{` ${transferType}`}</Text>
+                            <Text style={styles.valueText}>Tổng số tiền
+                                <Text style={styles.valueText}>{` ${amount}`}</Text>
                             </Text>
                         </View>
                     </View>
@@ -70,7 +80,7 @@ class Step4 extends Component {
                         title="TIẾP TỤC MUA SẮM"
                         style={{ backgroundColor: '#FE2E2E', borderRadius: 5, paddingVertical: 8, width: '100%', marginBottom: 8 }}
                         titleStyle={{ color: '#FFF', fontSize: responsiveFont(dims.Fonts.size.medium), fontWeight: '500' }}
-                        onPress={() => this.props.navigation.popToTop()}
+                        onPress={this.homeButtonPressed}
                     />
                     <ButtonCus
                         title="XEM ĐƠN HÀNG"

@@ -3,21 +3,33 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux';
 // import { images, icons } from '../../assets'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { dims, responsiveFont } from '../../constants'
+import { dims, responsiveFont, Colors } from '../../constants'
 
 class InforBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
     render() {
-        const { displayName, email, uid } = this.props.userInfo || '';
+        const { displayName, email, uid, photoURL } = this.props.userInfo || '';
         return (
             <View style={styles.container}>
                 <View style={styles.leftContainer}>
-                    <View style={styles.wrapIcon}>
-                        <Ionicons name='ios-person' size={30} color={'#FFF'} />
+                    <View style={[styles.wrapIcon, { backgroundColor: !photoURL ? null : Colors.white }]}>
+                        {
+                            !photoURL ?
+                                <View style={[styles.wrapIcon, { backgroundColor: Colors.blue }]}>
+                                    <Ionicons name='ios-person' size={30} color={'#FFF'} />
+                                </View>
+                                : <Image source={{ uri: photoURL }} resizeMode={'contain'} style={{ width: 30, height: 30 }} />
+                        }
                     </View>
                     <View style={styles.inforStyle}>
-                        {displayName && email && uid ?
+                        {email && uid ?
                             <React.Fragment>
-                                <Text style={styles.titleStyle}>{displayName}</Text>
+                                <Text style={styles.titleStyle}>{displayName ? displayName : ''}</Text>
                                 <Text style={styles.textStyle}>{email}</Text>
                                 <Text style={styles.textStyle}>{uid}</Text>
                             </React.Fragment>

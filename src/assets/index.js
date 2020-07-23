@@ -2,7 +2,8 @@ const icons = {
     search: require('./icons/search.png'),
     iconCart: require('./icons/cartIcon.png'),
     iconPet: require('./icons/iconPet.png'),
-    walletIcon: require('./icons/walletIcon.png')
+    walletIcon: require('./icons/walletIcon.png'),
+    copyResult: require('./icons/copy-result-icon.png')
 }
 
 const images = {

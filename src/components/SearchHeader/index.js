@@ -14,6 +14,8 @@ type Props = {
     placeholderTextColor: String,
     onPress: Function,
     onSubmit: Function,
+    autoFocus: Boolean,
+    value: String,
 }
 
 class SearchBar extends Component<Props> {
@@ -26,10 +28,12 @@ class SearchBar extends Component<Props> {
         placeholderTextColor: '#FFF',
         onPress: () => { },
         onSubmit: () => { },
+        autoFocus: false,
+        value: '',
     }
 
     render() {
-        const { placeholder, style, onChangeText, maxLength, containerStyle, placeholderTextColor, onPress, onSubmit } = this.props;
+        const { placeholder, style, onChangeText, maxLength, containerStyle, placeholderTextColor, onPress, onSubmit, autoFocus, value } = this.props;
         return (
             <View style={[styles.container, containerStyle]}>
                 <TouchableOpacity
@@ -39,12 +43,17 @@ class SearchBar extends Component<Props> {
                     <Ionicons name="ios-arrow-back" size={24} color={Colors.grayText2} />
                 </TouchableOpacity>
                 <TextInput
+                    ref={ref => {
+                        this.input = ref;
+                    }}
+                    autoFocus={autoFocus}
                     style={style}
                     placeholder={placeholder}
                     onChangeText={onChangeText}
                     maxLength={maxLength}
                     placeholderTextColor={placeholderTextColor}
                     onSubmitEditing={onSubmit}
+                    value={value}
                 />
             </View>
         )

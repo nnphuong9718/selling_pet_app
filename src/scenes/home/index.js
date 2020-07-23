@@ -1,15 +1,20 @@
-import React, { Component, Fragment } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { Component } from 'react'
+import { View, StyleSheet } from 'react-native';
 import HeaderBar from './HeaderBar';
 import SwipeItems from './SwipeItems'
 import MainMenu from './MainMenu'
 import CategoryProduct from './CategoryProduct';
 import HeaderCategory from './HeaderCategory';
-import { screenWidth, screenHeight, dims } from '../../constants/dims'
+import { dims } from '../../constants'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { connect } from 'react-redux'
 import { selectors, actions } from './services'
+import { emitter } from '../../utils/eventEmitter'
+
+import database from '@react-native-firebase/database';
+
+import * as AsyncStorage from '../../utils/asyncStorage';
 
 
 const keyCat = 1;
@@ -22,11 +27,29 @@ class Home extends Component {
         super(props);
         this.state = {
             pressedIndex: 0,
+            userInfor: {}
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.getListPet();
+        emitter.emit('RELOAD_CART', 10);
+
+        const { keys, getItem, setItem } = AsyncStorage;
+
+        await getItem(keys.uid).then((value) => {
+            if (!value) {
+                return;
+            } else {
+                database().ref('/users').on('value', snapshot => {
+                    console.log('###', value)
+                    this.setState({
+                        userInfor: snapshot._snapshot.value[value],
+                    })
+                })
+            }
+        })
+
     }
 
     _getIndexPress = (index) => {
@@ -35,15 +58,16 @@ class Home extends Component {
         })
     }
 
-    _getListPetRender = (listPet) => {
-
-    }
-
     _goToDetailScreen = (pet) => {
-        this.props.navigation.navigate('Details', { pet: pet })
+        const { userInfor } = this.state;
+        this.props.navigation.navigate('Details', {
+            pet: pet,
+            userInfor: userInfor
+        })
     }
 
     onOpenCart = () => {
+
         this.props.navigation.navigate('Cart', {});
     }
 
@@ -57,6 +81,8 @@ class Home extends Component {
         const listSale = listPet ? listPet.filter(pet => pet.promotion > 0) || [] : [];
         const listDog = listPet ? listPet.filter(pet => pet.category_id === keyDog && !pet.promotion) || [] : [];
         const listCat = listPet ? listPet.filter(pet => pet.category_id === keyCat && !pet.promotion) || [] : [];
+        const listBird = listPet ? listPet.filter(pet => pet.category_id === keyBird && !pet.promotion) || [] : [];
+        const listMouse = listPet ? listPet.filter(pet => pet.category_id === keyMouse && !pet.promotion) || [] : [];
 
 
         return (
@@ -112,6 +138,29 @@ class Home extends Component {
                             goToDetailScreen={id => this._goToDetailScreen(id)}
                         // pressedIndex={0}
                         />
+
+                        <HeaderCategory
+                            style={{ paddingHorizontal: 14 }}
+                            leftTitle='Chim'
+                        />
+                        <CategoryProduct
+                            style={{ paddingHorizontal: 14 }}
+                            listPet={listBird || []}
+                            goToDetailScreen={id => this._goToDetailScreen(id)}
+                        // pressedIndex={0}
+                        />
+                        <HeaderCategory
+                            style={{ paddingHorizontal: 14 }}
+                            leftTitle='Chuột'
+                        />
+                        <CategoryProduct
+                            style={{ paddingHorizontal: 14 }}
+                            listPet={listMouse || []}
+                            goToDetailScreen={id => this._goToDetailScreen(id)}
+                        // pressedIndex={0}
+                        />
+
+
                     </View>
                 </KeyboardAwareScrollView>
             </View>

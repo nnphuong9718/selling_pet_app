@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, ScrollView, EventEmitter } from 'react-native'
-import { HeaderBarDetail, PaddingView, ButtonCus } from '../../components'
+import { HeaderBarDetail, PaddingView, ButtonCus, Popup } from '../../components'
 // import InforBar from './InforBar'
 // import SocialConnect from './SocialConnect'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -15,19 +15,28 @@ import HTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { keys } from '../../utils/asyncStorage'
 
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
+import * as AsyncStorage from '../../utils/asyncStorage'
 
 import { emitter } from '../../utils/eventEmitter'
+
 
 class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalVisible: false
+            modalVisible: false,
+            userInfor: {},
+            showErrorPopup: false,
         }
     }
-    componentDidMount() {
-        const { pet } = this.props.route.params;
+    async componentDidMount() {
+        const { keys, getItem } = AsyncStorage
+        await getItem(keys.userInforFull).then(value => {
+            this.setState({
+                userInfor: JSON.parse(value),
+            })
+        })
     }
 
     backButtonPressed = () => {
@@ -35,6 +44,7 @@ class Product extends Component {
     }
 
     homeButtonPressed = () => {
+        emitter.emit('RELOAD_CART', 10);
         this.props.navigation.popToTop();
     }
 
@@ -58,8 +68,9 @@ class Product extends Component {
     }
 
     addToCart = async (pet) => {
+        const { keys, setItem, getItem } = AsyncStorage;
         let array = [];
-        await AsyncStorage.getItem(keys.cart)
+        await getItem(keys.cart)
             .then((value) => {
                 const _value = JSON.parse(value);
                 if (!_value) {
@@ -68,14 +79,14 @@ class Product extends Component {
                         nums: 1,
                     }
                     array.push(data);
-                    AsyncStorage.setItem(keys.cart, JSON.stringify(array),
+                    setItem(keys.cart, JSON.stringify(array),
                         this.setState({
                             modalVisible: true
                         }),
-
+                        emitter.emit('RELOAD_CART', 10)
                     )
-                    emitter.emit('RELOAD_CART')
                 } else {
+                    let indexDuplicate = 0;
                     array = JSON.parse(value);
                     // const arrayPetId = this.transformData(array);
                     // console.log('$$$#', arrayPetId)
@@ -91,13 +102,30 @@ class Product extends Component {
                     // } else {
                     //     array.push(pet);
                     // }
-                    array.map((item) => item.pet_id === pet.pet_id ? console.log('duplicate') : array.push(pet))
-                    // array.push(pet)
-                    AsyncStorage.setItem(keys.cart, JSON.stringify(array),
+                    // array.map((item) => item.pet_id === pet.pet_id ? console.log('no') : console.log('yes'))
+
+
+                    const arrayId = this.transformData(array);
+
+
+                    let duplicateIndex = arrayId.indexOf(pet.pet_id);
+
+                    if (duplicateIndex !== -1) {
                         this.setState({
-                            modalVisible: true
-                        }))
-                    emitter.emit('RELOAD_CART')
+                            showErrorPopup: true,
+                        })
+                    }
+                    else {
+                        array.push(pet)
+                        setItem(keys.cart, JSON.stringify(array),
+                            this.setState({
+                                modalVisible: true
+                            }),
+                            emitter.emit('RELOAD_CART', 10))
+                    }
+
+                    // array.push(pet)
+
                 }
             })
         // await AsyncStorage.removeItem(keys.cart)
@@ -110,15 +138,25 @@ class Product extends Component {
     }
 
     goToCartScreen = () => {
+
         this.setState({
             modalVisible: false
         })
-        this.props.navigation.navigate('Cart')
+        this.props.navigation.navigate('Cart', {
+            // userInfor
+        })
+    }
+
+    hidePopup = () => {
+        this.setState({
+            showErrorPopup: false,
+        })
     }
 
     render() {
         const { pet } = this.props.route.params;
         // console.log('###', pet.)
+        const { userInfor } = this.state;
 
         const { pet_id, images, pet_description, price, promotion } = pet;
 
@@ -169,7 +207,7 @@ class Product extends Component {
                                 titleStyle={{ color: '#FFF', fontSize: responsiveFont(dims.Fonts.size.medium) }}
                                 onPress={() => this.addToCart(pet)}
                             />
-                            <HTML html={`<p>Giao hàng tới <b>address user</b></p>`} />
+                            <HTML html={`<p>Giao hàng tới <b>${userInfor ? userInfor.address : ''}</b></p>`} />
                             <Modal
                                 animated='slide'
                                 visible={this.state.modalVisible}
@@ -218,6 +256,13 @@ class Product extends Component {
                         </PaddingView>
                     </KeyboardAwareScrollView>
                 </ScrollView>
+                <Popup
+                    modalVisible={this.state.showErrorPopup}
+                    message="Sản phẩm này đã tồn tại trong giỏ hàng!"
+                    numberOfButtons={1}
+                    titleSubmit={'Chọn sản phẩm khác!'}
+                    onSubmit={this.hidePopup}
+                />
             </View >
 
         )

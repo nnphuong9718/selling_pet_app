@@ -16,22 +16,21 @@ class HeaderBar extends Component {
     }
 
     async componentDidMount() {
-        emitter.addListener('RELOAD_CART',
-            // this.fetchData();
-            console.log('### hehe')
-        );
-        this.fetchData()
+        emitter.addListener('RELOAD_CART', (...args) => {
+            console.log(...args);
+            this.fetchData()
+        })
     }
 
     fetchData = async () => {
         const { keys, getItem } = AsyncStorage;
         const data = await getItem(keys.cart);
-
-        console.log('@@@', data);
         const _data = data ? JSON.parse(data) : null;
         this.setState({
             numOfProducts: _data ? _data.length : 0
         })
+
+        console.log('number of Products', this.state.numOfProducts)
     }
 
     handleSearch = (text) => {

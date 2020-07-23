@@ -8,5 +8,7 @@ import ListItem from './ListItem'
 import HeaderBarDetail from './HeaderBarDetail'
 import BlockView from './BlockView'
 import SearchHeader from './SearchHeader'
+import Popup from './Popup'
+import { Divider } from './Divider';
 
-export { ButtonCus, Container, PaddingView, SearchBar, Swipe, HeaderBar, ListItem, HeaderBarDetail, BlockView, SearchHeader }
+export { ButtonCus, Container, PaddingView, SearchBar, Swipe, HeaderBar, ListItem, HeaderBarDetail, BlockView, SearchHeader, Popup, Divider }
